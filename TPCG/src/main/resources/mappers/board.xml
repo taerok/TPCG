@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tpcg.TPCG.dao.boardDao">
+
+    <!-- SELECT -->
+	<select id="findAll" resultType="BoardDto">
+		select * from board
+	</select>
+
+	<select id="count" resultType="Long">
+		select count(id) from board
+	</select>
+
+	<select id="findById" resultType="BoardDto">
+		select * from board where id = #{id}
+	</select>
+
+	<select	id="findByTitleContainingOrContentContaining"
+		resultType="BoardDto">
+		select * from board
+		where title like concat('%',#{title},'%')
+		  or content like concat('%',#{content},'%')
+	</select>
+
+	<select id="findByTitle" resultType="BoardDto">
+		select * from board
+		where title like concat('%',#{title},'%')
+	</select>
+
+	<select id="findByContent" resultType="BoardDto">
+        select * from board
+        where title like concat('%',#{content},'%')
+    </select>
+
+    <!-- INSERT -->
+	<insert id="insert">
+		insert into board (id,title,content)
+		values (#{id},#{title},#{content})
+	</insert>
+
+    <!-- UPDATE -->
+	<update id="updateById">
+		update board set
+            title = #{title},
+            content = #{content}
+        where id = #{id}
+	</update>
+
+    <!-- DELETE -->
+    <delete id="deleteById">
+        delete from board where id = #{id}
+    </delete>
+
+</mapper>

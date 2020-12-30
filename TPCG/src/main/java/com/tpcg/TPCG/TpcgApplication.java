@@ -2,17 +2,12 @@ package com.tpcg.TPCG;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class TpcgApplication extends SpringBootServletInitializer{
+public class TpcgApplication{
 	
 	public static void main(String[] args) {
 		SpringApplication.run(TpcgApplication.class, args);
 	}
-
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(TpcgApplication.class);
-	}
+	
 }
