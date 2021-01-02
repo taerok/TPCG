@@ -2,6 +2,8 @@ package com.tpcg.TPCG.controller;
 
 import java.util.List;
 
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,8 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/board")
 public class BoardController {
 
+//	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private BoardService boardService;
 
@@ -31,7 +35,6 @@ public class BoardController {
 	@GetMapping(value = "/")
 	public ResponseEntity<List<BoardDto>> getBoardList() {
 		List<BoardDto> list = boardService.findAll();
-
 		return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
 	}
 
@@ -44,7 +47,7 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "선택된 옵션으로 게시글을 검색합니다.")
-	@GetMapping(value = "/{option}")
+	@GetMapping(value = "/search/{option}")
 	public ResponseEntity<List<BoardDto>> searchBoard(@PathVariable("option") String option,
 			@RequestParam("keyword") String keyword) {
 		List<BoardDto> list = null;

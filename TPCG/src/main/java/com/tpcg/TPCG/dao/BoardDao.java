@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.tpcg.TPCG.dto.BoardDto;
 
+
 @Mapper
 public interface BoardDao {
 	
