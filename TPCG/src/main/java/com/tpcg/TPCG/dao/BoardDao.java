@@ -18,6 +18,6 @@ public interface BoardDao {
 	public List<BoardDto> findByContent(String content);
 	public int insert(BoardDto boardDto);
 	public int update(BoardDto boardDto);
-	public int delete(long id);
+	public int deleteById(long id);
 	
 }

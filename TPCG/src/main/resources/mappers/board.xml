@@ -39,7 +39,7 @@
 	</insert>
 
     <!-- UPDATE -->
-	<update id="updateById">
+	<update id="update">
 		update board set
             title = #{title},
             content = #{content}

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,6 +23,7 @@ import com.tpcg.TPCG.service.BoardService;
 
 import io.swagger.annotations.ApiOperation;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/board")
 public class BoardController {
@@ -31,8 +33,9 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
+	@CrossOrigin(origins = "*", allowedHeaders = "*")
 	@ApiOperation(value = "모든 게시글을 가져옵니다.")
-	@GetMapping(value = "/")
+	@GetMapping
 	public ResponseEntity<List<BoardDto>> getBoardList() {
 		List<BoardDto> list = boardService.findAll();
 		return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
@@ -40,15 +43,15 @@ public class BoardController {
 
 	@ApiOperation(value = "선택된 게시글을 가져옵니다.")
 	@GetMapping(value = "/{board_id}")
-	public ResponseEntity<BoardDto> getBoardDetail(@PathVariable("board_id") long id) {
-		BoardDto boardDto = boardService.findById(id);
+	public ResponseEntity<BoardDto> getBoardDetail(@PathVariable("board_id") String id) {
+		BoardDto boardDto = boardService.findById(Integer.parseInt(id));
 
 		return new ResponseEntity<BoardDto>(boardDto, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "선택된 옵션으로 게시글을 검색합니다.")
-	@GetMapping(value = "/search/{option}")
-	public ResponseEntity<List<BoardDto>> searchBoard(@PathVariable("option") String option,
+	@GetMapping(value = "/search")
+	public ResponseEntity<List<BoardDto>> searchBoard(@RequestParam("option") String option,
 			@RequestParam("keyword") String keyword) {
 		List<BoardDto> list = null;
 		switch (option) {
@@ -69,7 +72,7 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시글을 등록합니다.")
-	@PostMapping(value = "/")
+	@PostMapping
 	public ResponseEntity<String> registBoard(@RequestBody BoardDto boardDto) {
 		int res = boardService.insert(boardDto);
 		if (res == 0) {
@@ -79,7 +82,7 @@ public class BoardController {
 	}
 
 	@ApiOperation(value = "게시글을 수정합니다.")
-	@PatchMapping(value = "/")
+	@PatchMapping
 	public ResponseEntity<String> updateBoard(@RequestBody BoardDto boardDto) {
 		int res = boardService.update(boardDto);
 		if (res == 0) {
@@ -90,8 +93,8 @@ public class BoardController {
 
 	@ApiOperation(value = "게시글을 지웁니다.")
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<String> removeBoard(@PathVariable("id") long id) {
-		int res = boardService.delete(id);
+	public ResponseEntity<String> removeBoard(@PathVariable("id") String id) {
+		int res = boardService.deleteById(Integer.parseInt(id));
 		if (res == 0) {
 			return new ResponseEntity<String>("fail", HttpStatus.OK);
 		}
